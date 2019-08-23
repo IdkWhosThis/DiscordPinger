@@ -9,7 +9,7 @@ If you want to use DiscordPinger, you will need to rename `config.js.example` to
 
 Then, open `config.js` and fill it with needed informations.
 
-### config.js:
+###### config.js:
 ```js
 const config = {
 
@@ -29,3 +29,6 @@ const config = {
 
 module.exports = config;
 ```
+Now, you can use `node pinger.js` and start DiscordPinger!
+
+## Commands
