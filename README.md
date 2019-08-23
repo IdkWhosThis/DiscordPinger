@@ -36,3 +36,8 @@ Usage | Description
 ------------ | -------------
 ping <@mention> | This will start pinging mentioned user.
 stop | This command will stop pinging.
+
+## To-do
+- [x] Add stop to stop pinging.
+- [x] If channel does not exist, or was deleted, create new one.
+- [ ] Prevent stopping, when bot does not pinging.
