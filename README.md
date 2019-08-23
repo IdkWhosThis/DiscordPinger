@@ -42,6 +42,7 @@ stop | This command will stop pinging.
 - [x] If channel does not exist, or was deleted, create new one.
 - [ ] Prevent stopping, when bot does not pinging.
 
+
 > _If you will find bug, create an issue and describe it._
 
 > _Feel free to make Pull request with new features, or fixes._
