@@ -29,7 +29,8 @@ const config = {
 
 module.exports = config;
 ```
-Now, you can use `node pinger.js` and start DiscordPinger!
+## Running DiscordPinger
+You can start bot useng `node pinger.js`, or simply use `start.bat` on windows, or `start.sh` on linux.
 
 ## Commands
 Usage | Description
