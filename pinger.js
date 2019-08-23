@@ -58,7 +58,7 @@ Pinger.on('message', async message => {
             await clearInterval(interval);
             await sleep(5000);
             await message.channel.send(`**${message.author.username}**, stopped pinging successfully!`);
-            await Pinger.setActivity("Iam normal bot :kappa:")
+            await Pinger.user.setActivity("Iam normal bot :kappa:")
             console.log(`Stopped pinging by: ${message.author.tag}`);
 
         }
