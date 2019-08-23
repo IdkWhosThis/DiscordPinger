@@ -32,3 +32,7 @@ module.exports = config;
 Now, you can use `node pinger.js` and start DiscordPinger!
 
 ## Commands
+Usage | Description
+------------ | -------------
+ping <@mention> | This will start pinging mentioned user.
+stop | This command will stop pinging.
