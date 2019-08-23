@@ -42,6 +42,7 @@ stop | This command will stop pinging.
 - [x] Add stop to stop pinging.
 - [x] If channel does not exist, or was deleted, create new one.
 - [ ] Prevent stopping, when bot does not pinging.
+- [ ] Create DBM (Discord Bot Maker) version of DiscordPinger.
 
 
 > _If you will find bug, create an issue and describe it._
