@@ -2,7 +2,7 @@
 Bot for ping spamming someone.
 
 ## Installation
-All you need to do, is install discord.js using `npm i discord.js`.
+All you need to do, is install discord.js using `npm i discord.js@11.4.2` or simply using setup.bat/setup.sh files.
 
 ## Setup
 If you want to use DiscordPinger, you will need to rename `config.js.example` to `config.js`.
