@@ -1,68 +1,43 @@
-const Discord = require('discord.js');
-const Pinger = new Discord.Client();
-Pinger.config = require('./config.js');
-config = Pinger.config;
+const { Client, Intents } = require("discord.js");
+const client = new Client({ intents: [Intents.FLAGS.GUILD_MESSAGES] });
+const config = require("./config.json");
 
-Pinger.on('ready', async () => {
-    Pinger.user.setActivity('Iam normal bot :kappa:');
-    console.log(`${Pinger.user.username} is online!`);
-});
-
-Pinger.on('message', async message => {
-    let prefix = config.prefix;
-    if (!message.content.startsWith(prefix)) return;
-
-    async function init() {
-        console.log(1)
-        await sleep(1000)
-        console.log(2)
-    }
-
-    function sleep(ms) {
-        return new Promise(resolve => {
-            setTimeout(resolve, ms)
-        })
-    }
-
-    if (config.ownerOnly == true && message.author.id !== config.ownerID) {
-        return;
-    } else {
-
-        if (message.content.startsWith(prefix + "ping")) {
-            let user = message.mentions.users.first();
-            if (!user) return message.channel.send(`**${message.author.username}**, you must mention someone!`);
-
-            message.channel.send(`**${message.author.username}**, ping on **${user.tag}** started!`);
-            Pinger.user.setActivity(`Pinging: ${user.tag}`);
-            console.log(`Started pinging on: ${user.tag}!`)
-
-
-            interval = setInterval(async () => {
-
-                let pingChannel = Pinger.channels.find(c => c.name === `${config.channelName}`);
-                if (!pingChannel) {
-                    await message.guild.createChannel(`${config.channelName}`).then(c => {
-                        console.log(`Channel not found. Created new one.\nName: ${c.name}\nID: ${c.id}`);
-                        c.send(`<@${user.id}>`);
-                    });
-                } else {
-                    pingChannel.send(`<@${user.id}>`);
-                }
-
-
-            }, config.pingInterval);
-        };
-
-        if (message.content.startsWith(prefix + "stop")) {
-            await message.channel.send(`**${message.author.username}**, stopping pinging!`);
-            await clearInterval(interval);
-            await sleep(5000);
-            await message.channel.send(`**${message.author.username}**, stopped pinging successfully!`);
-            await Pinger.user.setActivity("Iam normal bot :kappa:")
-            console.log(`Stopped pinging by: ${message.author.tag}`);
-
-        }
-    }
+client.on("ready", () => client.user.setActivity("I'm a normal bot :kappa:", { type: "PLAYING" }));
+client.on("messageCreate", async (msg) => {
+	const sleep = (ms) => { return new Promise((res) => setTimeout(res, ms)) }
+	const prefix = config.prefix;
+	const cmds = ["ping", "stop"];
+	const hasCommand = (v) => msg.content.startsWith(prefix+cmds[v]);
+	
+	if (msg.author.bot) return;
+	if ((config.ownerOnly == true) && (msg.author.id !== config.ownerID)) return; else {
+		if (hasCommand(0)) {
+			let user = msg.mentions.users.first();
+			let chan = client.channels.find((c) => (c.name === config.channelName));
+			if (!user) return msg.reply(`[ERR]: No user was mentioned.`);
+			
+			client.user.setActivity(`Pinging: ${user.tag}`);
+			console.log(`Pinging: ${user.tag}`);
+			msg.reply(`Begain pinging: ***${user.tag}*`);
+			
+			let interval = setInterval(async () => {
+				if (!chan) {
+					await msg.guild.createChannel(config.channelName).then((n) => {
+						console.log(`[ERR]: Failed to find channel, so a new one was created.\nName: ${n.name}\nID: ${n.id}`);
+						n.send(`<@${user.id}>`);
+					});
+				} else ((config.channelName).send(`<@${user.id}>`));
+			}, config.pingInterval);
+		} else {
+			if (hasCommand(1)) {
+				await msg.reply();
+				await clearInterval(interval);
+				await sleep(5000);
+				await msg.reply(`I've stopped pinging ${user.tag}`);
+				await client.user.setActivity("I'm a normal bot :kappa:", { type: "PLAYING" });
+			}
+		}
+	}
 });
 
 Pinger.login(config.token);
